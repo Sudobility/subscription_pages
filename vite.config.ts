@@ -28,7 +28,7 @@ export default defineConfig({
         'react-dom',
         'react/jsx-runtime',
         '@sudobility/subscription_lib',
-        '@sudobility/subscription-components',
+        '@sudobility/components/subscription',
         '@sudobility/types',
       ],
       output: {

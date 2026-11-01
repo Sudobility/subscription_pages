@@ -29,8 +29,8 @@ import type { SubscriptionPackage } from '@sudobility/subscription_lib';
 import {
   SubscriptionLayout,
   SegmentedControl,
-} from '@sudobility/subscription-components';
-import type { FreeTileConfig } from '@sudobility/subscription-components';
+} from '@sudobility/components/subscription';
+import type { FreeTileConfig } from '@sudobility/components/subscription';
 import { CrossPlatformSubscriptionInfo } from '../components/CrossPlatformSubscriptionInfo';
 
 export interface SubscriptionByOfferPageProps {

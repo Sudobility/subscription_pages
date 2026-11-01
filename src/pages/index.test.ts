@@ -10,7 +10,7 @@ vi.mock('@sudobility/subscription_lib', () => ({
   refreshSubscription: vi.fn(),
 }));
 
-vi.mock('@sudobility/subscription-components', () => ({
+vi.mock('@sudobility/components/subscription', () => ({
   SubscriptionLayout: vi.fn(),
   SubscriptionTile: vi.fn(),
   SegmentedControl: vi.fn(),

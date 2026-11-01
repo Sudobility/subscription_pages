@@ -98,7 +98,7 @@ const MockSegmentedControl = vi.fn(({ options, value, onChange }: any) => (
   </div>
 ));
 
-vi.mock('@sudobility/subscription-components', () => ({
+vi.mock('@sudobility/components/subscription', () => ({
   SubscriptionLayout: (props: any) => MockSubscriptionLayout(props),
   SubscriptionTile: (props: any) => MockSubscriptionTile(props),
   SegmentedControl: (props: any) => MockSegmentedControl(props),

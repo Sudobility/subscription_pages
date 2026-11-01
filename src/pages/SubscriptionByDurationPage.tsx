@@ -23,8 +23,8 @@ import {
   SubscriptionLayout,
   SubscriptionTile,
   SegmentedControl,
-} from '@sudobility/subscription-components';
-import type { FreeTileConfig } from '@sudobility/subscription-components';
+} from '@sudobility/components/subscription';
+import type { FreeTileConfig } from '@sudobility/components/subscription';
 import { CrossPlatformSubscriptionInfo } from '../components/CrossPlatformSubscriptionInfo';
 
 export interface SubscriptionByDurationPageProps {
