@@ -14,3 +14,12 @@ export {
   clearRevenueCatUser,
   hasRevenueCatUser,
 } from './adapters';
+
+// Auth-aware subscription providers (moved here from building_blocks so that
+// building_blocks keeps no dependency on subscription_lib / subscription_pages).
+export {
+  SafeSubscriptionContext,
+  STUB_SUBSCRIPTION_VALUE,
+  useSafeSubscription,
+  LazySubscriptionProvider,
+} from './providers';
