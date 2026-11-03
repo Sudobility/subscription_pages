@@ -9,7 +9,7 @@ import {
   SubscriptionProvider,
   useSubscriptionContext,
 } from '@sudobility/components/subscription';
-import { useAuthStatus } from '@sudobility/components/auth';
+import { useAuthUser } from '@sudobility/auth_lib/auth-js';
 import { getInfoService } from '@sudobility/di/info';
 import { InfoType } from '@sudobility/types';
 // refreshSubscription is agnostic business logic (subscription_lib); the
@@ -48,7 +48,7 @@ function SubscriptionBridge({
   children: ReactNode;
   entityId?: string;
 }) {
-  const { user } = useAuthStatus();
+  const user = useAuthUser();
   const context = useSubscriptionContext();
   const entityIdRef = useRef<string | null>(null);
 
@@ -81,7 +81,7 @@ export function SubscriptionProviderWrapper({
   entityId,
   apiKey,
 }: SubscriptionProviderWrapperProps) {
-  const { user } = useAuthStatus();
+  const user = useAuthUser();
 
   return (
     <SubscriptionProvider

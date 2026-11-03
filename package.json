@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/subscription_pages",
-  "version": "0.0.102",
+  "version": "0.0.103",
   "description": "Subscription page components for React web applications",
   "type": "module",
   "main": "dist/index.js",
@@ -32,8 +32,9 @@
     "@sudobility/subscription_lib": "^0.0.64",
     "@sudobility/types": "^1.9.78",
     "@sudobility/design": "^1.1.68",
-    "@sudobility/components": "^5.3.58",
-    "@sudobility/di": "^1.5.85"
+    "@sudobility/components": "^5.3.59",
+    "@sudobility/di": "^1.5.85",
+    "@sudobility/auth_lib": "^0.0.127"
   },
   "devDependencies": {
     "@revenuecat/purchases-js": "~1.73.1",
@@ -58,7 +59,8 @@
     "typescript": "~6.0.3",
     "vite": "~8.3.5",
     "vite-plugin-dts": "~4.5.4",
-    "vitest": "~4.1.12"
+    "vitest": "~4.1.12",
+    "@sudobility/auth_lib": "^0.0.127"
   },
   "publishConfig": {
     "access": "public"
@@ -69,6 +71,6 @@
     "url": "https://github.com/Sudobility/subscription_pages.git"
   },
   "dependencies": {
-    "@sudobility/components": "^5.3.58"
+    "@sudobility/components": "^5.3.59"
   }
 }

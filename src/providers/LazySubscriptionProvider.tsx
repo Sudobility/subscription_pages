@@ -5,8 +5,8 @@
  * For unauthenticated users, provides a stub context.
  */
 
-import { type ReactNode, Suspense, lazy, useMemo } from 'react';
-import { useAuthStatus } from '@sudobility/components/auth';
+import { type ReactNode, Suspense, lazy } from 'react';
+import { useIsLoggedIn } from '@sudobility/auth_lib/auth-js';
 import {
   SafeSubscriptionContext,
   STUB_SUBSCRIPTION_VALUE,
@@ -43,11 +43,7 @@ export function LazySubscriptionProvider({
   entityId,
   apiKey,
 }: LazySubscriptionProviderProps) {
-  const { user } = useAuthStatus();
-
-  const isAuthenticated = useMemo(() => {
-    return !!user && !user.isAnonymous;
-  }, [user]);
+  const isAuthenticated = useIsLoggedIn();
 
   if (!isAuthenticated) {
     return <StubSubscriptionProvider>{children}</StubSubscriptionProvider>;
