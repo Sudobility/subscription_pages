@@ -15,6 +15,7 @@ import {
   usePackagesByDuration,
   useUserSubscription,
   useBackendSubscription,
+  useIsUserSubscribable,
   getSubscriptionInstance,
   refreshSubscription,
 } from '@sudobility/subscription_lib';
@@ -28,8 +29,6 @@ import type { FreeTileConfig } from '@sudobility/components/subscription';
 import { CrossPlatformSubscriptionInfo } from '../components/CrossPlatformSubscriptionInfo';
 
 export interface SubscriptionByDurationPageProps {
-  /** Whether the user is logged in */
-  isLoggedIn: boolean;
   /** Callback when user needs to navigate to login. offerId and packageId are passed when a specific package CTA is clicked. */
   onNavigateToLogin: (offerId?: string, packageId?: string) => void;
   /** User ID for subscription lookup (undefined if not logged in) */
@@ -66,7 +65,6 @@ export interface SubscriptionByDurationPageProps {
 }
 
 export function SubscriptionByDurationPage({
-  isLoggedIn,
   onNavigateToLogin,
   userId,
   userEmail,
@@ -85,6 +83,11 @@ export function SubscriptionByDurationPage({
 }: SubscriptionByDurationPageProps) {
   const loc = (key: string, fallback: string) =>
     translate ? translate(key, fallback) : fallback;
+
+  // Whether this user can start a subscription purchase — the single source of
+  // truth (subscription_lib). On web billing this is a logged-in real account.
+  const isUserSubscribable = useIsUserSubscribable();
+
   const {
     packagesByDuration,
     availableDurations,
@@ -142,7 +145,7 @@ export function SubscriptionByDurationPage({
   };
 
   const getFreeTileConfig = (): FreeTileConfig | undefined => {
-    if (!isLoggedIn) {
+    if (!isUserSubscribable) {
       return {
         title: 'Free',
         price: '$0',
@@ -181,7 +184,7 @@ export function SubscriptionByDurationPage({
   };
 
   const getPaidTileCta = (pkg: PackageWithOffer) => {
-    if (!isLoggedIn) {
+    if (!isUserSubscribable) {
       return {
         label: 'Log in to Continue',
         onClick: () => onNavigateToLogin(pkg.offerId, pkg.package.packageId),
@@ -230,8 +233,9 @@ export function SubscriptionByDurationPage({
 
   const displayError = purchaseError ?? (error ? error.message : null);
 
+  // Shown whenever an active subscription exists, independent of login.
   const currentStatusConfig =
-    isLoggedIn && subscription?.isActive && subscription.packageId
+    subscription?.isActive && subscription.packageId
       ? {
           isActive: true as const,
           activeContent: {
@@ -316,7 +320,6 @@ export function SubscriptionByDurationPage({
     >
       {currentPackages.map(pkg => {
         const isCurrentPlan =
-          isLoggedIn &&
           subscription?.isActive &&
           subscription.packageId === pkg.package.packageId &&
           subscription.offeringId === pkg.offerId;

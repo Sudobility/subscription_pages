@@ -21,6 +21,7 @@ import {
   useOfferingPackages,
   useUserSubscription,
   useBackendSubscription,
+  useIsUserSubscribable,
   getSubscriptionInstance,
   refreshSubscription,
   periodToMonths,
@@ -34,8 +35,6 @@ import type { FreeTileConfig } from '@sudobility/components/subscription';
 import { CrossPlatformSubscriptionInfo } from '../components/CrossPlatformSubscriptionInfo';
 
 export interface SubscriptionByOfferPageProps {
-  /** Whether the user is logged in */
-  isLoggedIn: boolean;
   /** Callback when user needs to navigate to login. offerId and packageId are passed when a specific package CTA is clicked. */
   onNavigateToLogin: (offerId?: string, packageId?: string) => void;
   /** User ID for subscription lookup */
@@ -123,7 +122,6 @@ function calcSavingsPercent(
 }
 
 export function SubscriptionByOfferPage({
-  isLoggedIn,
   onNavigateToLogin,
   userId,
   userEmail,
@@ -142,6 +140,11 @@ export function SubscriptionByOfferPage({
 }: SubscriptionByOfferPageProps) {
   const loc = (key: string, fallback: string) =>
     translate ? translate(key, fallback) : fallback;
+
+  // Whether this user can start a subscription purchase — the single source of
+  // truth (subscription_lib), derived from the userId and whether the adapter
+  // bills through native IAP. On web billing this is a logged-in real account.
+  const isUserSubscribable = useIsUserSubscribable();
 
   const {
     offerings,
@@ -245,7 +248,7 @@ export function SubscriptionByOfferPage({
   const basePkg = packages[0] ?? null;
 
   const getFreeTileConfig = (): FreeTileConfig | undefined => {
-    if (!isLoggedIn) {
+    if (!isUserSubscribable) {
       return {
         title: loc('free', 'Free'),
         price: '$0',
@@ -284,7 +287,8 @@ export function SubscriptionByOfferPage({
   };
 
   const getCtaLabel = (pkg: SubscriptionPackage): string => {
-    if (!isLoggedIn) return loc('login_to_continue', 'Log in to Continue');
+    if (!isUserSubscribable)
+      return loc('login_to_continue', 'Log in to Continue');
     const hasSubscription = subscription?.isActive && subscription.packageId;
     if (hasSubscription) {
       const isCurrentPlan =
@@ -298,7 +302,8 @@ export function SubscriptionByOfferPage({
   };
 
   const getCtaAction = (pkg: SubscriptionPackage, _offerId: string) => {
-    if (!isLoggedIn) return () => onNavigateToLogin(_offerId, pkg.packageId);
+    if (!isUserSubscribable)
+      return () => onNavigateToLogin(_offerId, pkg.packageId);
     const hasSubscription = subscription?.isActive && subscription.packageId;
     if (hasSubscription) {
       // All CTAs go to management URL when subscribed
@@ -330,8 +335,10 @@ export function SubscriptionByOfferPage({
 
   const displayError = purchaseError ?? (error ? error.message : null);
 
+  // An active subscription is shown whenever one exists; it does not depend on
+  // login (an anonymous IAP user can hold one).
   const currentStatusConfig =
-    isLoggedIn && subscription?.isActive && subscription.packageId
+    subscription?.isActive && subscription.packageId
       ? {
           isActive: true as const,
           activeContent: {
@@ -427,7 +434,6 @@ export function SubscriptionByOfferPage({
                 ? loc(period, PERIOD_LABELS[period] ?? capitalize(period))
                 : pkg.name;
               const isCurrentPlan =
-                isLoggedIn &&
                 subscription?.isActive &&
                 subscription.packageId === pkg.packageId &&
                 subscription.offeringId === selectedSegment;

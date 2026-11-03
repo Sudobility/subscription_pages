@@ -6,12 +6,14 @@ import type { SubscriptionPeriod } from '@sudobility/types';
 // Mock subscription_lib
 const mockUsePackagesByDuration = vi.fn();
 const mockUseUserSubscription = vi.fn();
+const mockUseIsUserSubscribable = vi.fn();
 const mockGetSubscriptionInstance = vi.fn();
 const mockRefreshSubscription = vi.fn();
 
 vi.mock('@sudobility/subscription_lib', () => ({
   usePackagesByDuration: () => mockUsePackagesByDuration(),
   useUserSubscription: () => mockUseUserSubscription(),
+  useIsUserSubscribable: () => mockUseIsUserSubscribable(),
   useBackendSubscription: () => ({
     data: undefined,
     isLoading: false,
@@ -132,6 +134,8 @@ describe('SubscriptionByDurationPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockRefreshSubscription.mockResolvedValue(undefined);
+    // Default: a user who can subscribe. Not-subscribable tests override this.
+    mockUseIsUserSubscribable.mockReturnValue(true);
   });
 
   it('shows loading state', () => {
@@ -181,6 +185,7 @@ describe('SubscriptionByDurationPage', () => {
   });
 
   it('shows "Try it for Free" and "Log in to Continue" when not logged in', () => {
+    mockUseIsUserSubscribable.mockReturnValue(false);
     const monthlyPkg = makePackageWithOffer(
       'pro_monthly',
       'Pro Monthly',

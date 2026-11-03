@@ -6,6 +6,7 @@ import { SubscriptionByOfferPage } from './SubscriptionByOfferPage';
 const mockUseAllOfferings = vi.fn();
 const mockUseOfferingPackages = vi.fn();
 const mockUseUserSubscription = vi.fn();
+const mockUseIsUserSubscribable = vi.fn();
 const mockGetSubscriptionInstance = vi.fn();
 const mockRefreshSubscription = vi.fn();
 
@@ -13,6 +14,7 @@ vi.mock('@sudobility/subscription_lib', () => ({
   useAllOfferings: () => mockUseAllOfferings(),
   useOfferingPackages: () => mockUseOfferingPackages(),
   useUserSubscription: () => mockUseUserSubscription(),
+  useIsUserSubscribable: () => mockUseIsUserSubscribable(),
   useBackendSubscription: () => ({
     data: undefined,
     isLoading: false,
@@ -136,6 +138,9 @@ describe('SubscriptionByOfferPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockRefreshSubscription.mockResolvedValue(undefined);
+    // Default: a user who can subscribe (web billing + logged in). Tests that
+    // exercise the not-subscribable path override this to false.
+    mockUseIsUserSubscribable.mockReturnValue(true);
   });
 
   it('shows loading state', () => {
@@ -193,6 +198,7 @@ describe('SubscriptionByOfferPage', () => {
   });
 
   it('shows free tile with "Try it for Free" when not logged in', () => {
+    mockUseIsUserSubscribable.mockReturnValue(false);
     mockUseAllOfferings.mockReturnValue({
       offerings: mockOfferings,
       isLoading: false,
@@ -284,6 +290,7 @@ describe('SubscriptionByOfferPage', () => {
   });
 
   it('shows duration list when switching to an offering segment', () => {
+    mockUseIsUserSubscribable.mockReturnValue(false);
     mockUseAllOfferings.mockReturnValue({
       offerings: mockOfferings,
       isLoading: false,
