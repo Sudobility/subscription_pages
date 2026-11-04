@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/subscription_pages",
-  "version": "0.0.105",
+  "version": "0.0.106",
   "description": "Subscription page components for React web applications",
   "type": "module",
   "main": "dist/index.js",
@@ -32,7 +32,7 @@
     "@sudobility/subscription_lib": "^0.0.64",
     "@sudobility/types": "^1.9.78",
     "@sudobility/design": "^1.1.69",
-    "@sudobility/components": "^5.3.61",
+    "@sudobility/components": "^5.3.62",
     "@sudobility/di": "^1.5.85",
     "@sudobility/auth_lib": "^0.0.127"
   },
@@ -71,6 +71,6 @@
     "url": "https://github.com/Sudobility/subscription_pages.git"
   },
   "dependencies": {
-    "@sudobility/components": "^5.3.61"
+    "@sudobility/components": "^5.3.62"
   }
 }
