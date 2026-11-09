@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/subscription_pages",
-  "version": "0.0.108",
+  "version": "0.0.109",
   "description": "Subscription page components for React web applications",
   "type": "module",
   "main": "dist/index.js",
@@ -29,19 +29,19 @@
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
     "@revenuecat/purchases-js": "^1.0.0",
-    "@sudobility/subscription_lib": "^0.0.65",
-    "@sudobility/types": "^1.9.78",
-    "@sudobility/design": "^1.1.69",
-    "@sudobility/components": "^5.3.64",
-    "@sudobility/di": "^1.5.85",
-    "@sudobility/auth_lib": "^0.0.128"
+    "@sudobility/subscription_lib": "^0.0.66",
+    "@sudobility/types": "^1.9.79",
+    "@sudobility/design": "^1.1.70",
+    "@sudobility/components": "^5.3.65",
+    "@sudobility/di": "^1.5.86",
+    "@sudobility/auth_lib": "^0.0.129"
   },
   "devDependencies": {
     "@revenuecat/purchases-js": "~1.73.1",
-    "@sudobility/design": "^1.1.69",
-    "@sudobility/di": "^1.5.85",
-    "@sudobility/subscription_lib": "^0.0.65",
-    "@sudobility/types": "^1.9.78",
+    "@sudobility/design": "^1.1.70",
+    "@sudobility/di": "^1.5.86",
+    "@sudobility/subscription_lib": "^0.0.66",
+    "@sudobility/types": "^1.9.79",
     "@tanstack/react-query": "~5.104.5",
     "@testing-library/jest-dom": "~7.0.1",
     "@testing-library/react": "~16.3.3",
@@ -60,7 +60,7 @@
     "vite": "~8.3.5",
     "vite-plugin-dts": "~4.5.4",
     "vitest": "~4.1.12",
-    "@sudobility/auth_lib": "^0.0.128"
+    "@sudobility/auth_lib": "^0.0.129"
   },
   "publishConfig": {
     "access": "public"
@@ -71,6 +71,6 @@
     "url": "https://github.com/Sudobility/subscription_pages.git"
   },
   "dependencies": {
-    "@sudobility/components": "^5.3.64"
+    "@sudobility/components": "^5.3.65"
   }
 }
