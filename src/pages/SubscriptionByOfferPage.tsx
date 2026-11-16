@@ -13,8 +13,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   SubscriptionPlatform,
   type SubscriptionPeriod,
+  type NetworkClient,
 } from '@sudobility/types';
-import type { NetworkClient } from '@sudobility/types';
 import { colors, ui } from '@sudobility/design';
 import {
   useAllOfferings,

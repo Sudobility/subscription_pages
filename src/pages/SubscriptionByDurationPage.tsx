@@ -9,8 +9,8 @@ import { useState } from 'react';
 import {
   SubscriptionPlatform,
   type SubscriptionPeriod,
+  type NetworkClient,
 } from '@sudobility/types';
-import type { NetworkClient } from '@sudobility/types';
 import {
   usePackagesByDuration,
   useUserSubscription,
